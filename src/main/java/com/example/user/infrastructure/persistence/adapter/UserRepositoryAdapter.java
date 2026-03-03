@@ -7,7 +7,6 @@ import com.example.user.infrastructure.persistence.entity.UserEntity;
 import com.example.user.infrastructure.persistence.mapper.IUserMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -33,12 +32,12 @@ public class UserRepositoryAdapter implements UserRepository {
         return jpaUserRepository.existsByEmail(email);
     }
 
-
     @Override
-    public boolean passwordMatches(String email, String password) {
-        Optional<UserEntity> user = jpaUserRepository.findByEmail(email);
-        return user.isPresent() && user.get().getPassword().equals(password);
+    public Optional<User> findByEmail(String email) {
+        return jpaUserRepository.findByEmail(email).map(userMapper::toDomain) ;
     }
+
+
 
 
 }

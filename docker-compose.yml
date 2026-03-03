@@ -1,7 +1,7 @@
 services:
 
   api:
-    command: sh -c "java -jar build/libs/CleanArchitecture-0.0.1-SNAPSHOT.jar"
+    command: sh -c "java -jar build/libs/Backend-challenge-0.0.1-SNAPSHOT.jar"
     depends_on:
       - postgres
     build:
@@ -10,11 +10,10 @@ services:
     ports:
       - 8080:8080
     environment:
-      JDBC_DATABASE_URL: jdbc:postgresql://postgres_server:5432/mi_base_db
+      JDBC_DATABASE_URL: jdbc:postgresql://postgres_server:5432/db_challenge
       JDBC_DATABASE_USERNAME: root
       JDBC_DATABASE_PASSWORD: root
       DB_DRIVER: org.postgresql.Driver
-      POKEMON_API_URL: https://pokeapi.co/api/v2/pokemon
       SERVER_PORT: 8080
     restart: unless-stopped
 
@@ -34,7 +33,7 @@ services:
       DATABASE_HOST: 127.0.0.1
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: mi_base_db
+      POSTGRES_DB: db_challenge
 
 volumes:
   pgdata:
