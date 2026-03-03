@@ -8,7 +8,7 @@ public interface UserRepository {
 
     boolean existsByEmail(String email);
 
-    String login(String email, String password);
+
 
     boolean passwordMatches(String email, String password);
 

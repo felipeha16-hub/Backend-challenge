@@ -1,14 +1,12 @@
 package com.example.user.application.mapper;
 
 import com.example.user.application.dto.CreateUserDTO;
+import com.example.user.application.dto.LoginUserDTO;
 import com.example.user.application.dto.UserResponseDTO;
 import com.example.user.domain.model.User;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
 
-@Component
-@AllArgsConstructor
+
 public class UserMapper {
 
 
@@ -22,4 +20,7 @@ public class UserMapper {
     }
 
 
+    public static User toDomain(LoginUserDTO dto) {
+        return new User(null, dto.getEmail(), dto.getPassword());
+    }
 }

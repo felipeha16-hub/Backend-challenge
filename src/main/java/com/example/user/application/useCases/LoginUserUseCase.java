@@ -1,6 +1,7 @@
 package com.example.user.application.useCases;
 
-import com.example.user.application.dto.CreateUserDTO;
+
+import com.example.user.application.dto.LoginUserDTO;
 import com.example.user.application.dto.UserResponseDTO;
 import com.example.user.application.mapper.UserMapper;
 import com.example.user.domain.exceptions.BusinessException;
@@ -9,18 +10,10 @@ import com.example.user.domain.model.User;
 import com.example.user.domain.repository.UserRepository;
 import com.example.user.domain.services.TokenService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 
-/**
- * CreateUserUseCase: Caso de uso para crear un nuevo usuario
- *
- * Validaciones:
- * - El email no debe estar duplicado (400 Bad Request)
- * - La contraseña debe tener al menos 8 caracteres (400 Bad Request)
- * - El email debe ser válido (delegado a @Email en DTO)
- */
+
 @AllArgsConstructor
 @Component
 public class LoginUserUseCase {
@@ -28,7 +21,7 @@ public class LoginUserUseCase {
     private final UserRepository repository;
     private final TokenService tokenService;
 
-    public UserResponseDTO create(CreateUserDTO dto) {
+    public UserResponseDTO login(LoginUserDTO dto) {
 
         //Transform DTO a dominio
         User user = UserMapper.toDomain(dto);
