@@ -14,6 +14,10 @@ public enum BusinessErrorMessage {
     INVALID_EMAIL_FORMAT("Invalid email format", HttpStatus.BAD_REQUEST),
     INVALID_PASSWORD("Password should have 8 characters", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD("Incorrect password", HttpStatus.BAD_REQUEST),
+
+    //401
+    UNAUTHORIZED("Unauthorized access expired token or invalid token ", HttpStatus.UNAUTHORIZED),
+
     // 404 - Not Found
     USER_NOT_FOUND("User not found", HttpStatus.NOT_FOUND),
 

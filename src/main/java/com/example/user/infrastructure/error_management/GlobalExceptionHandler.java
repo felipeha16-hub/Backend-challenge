@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 
 
 
+
 @RestControllerAdvice
 @ConditionalOnProperty(name = "app.exception-handler.enabled", havingValue = "true")
 @Slf4j
@@ -88,33 +89,40 @@ public class GlobalExceptionHandler {
     }
 
 
-     //Generic handler for unhandled exceptions
-
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGenericException(
+    public ResponseEntity<ErrorResponseDTO> handleAllExceptions(
             Exception ex,
-            WebRequest request) {
+            HttpServletRequest request) {
 
-        String path = extractPath(request);
+        // We determine the status, if the exception is a security exception or the message contains "JWT" or "token", we give 401, otherwise it's a real internal error (500).
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        String message = "Internal Server Error";
 
-        log.error("Excepción no manejada: {}", ex.getMessage(), ex);
+        if (ex instanceof org.springframework.security.core.AuthenticationException ||
+                ex.getMessage().toLowerCase().contains("jwt") ||
+                ex.getMessage().toLowerCase().contains("token")) {
+            status = HttpStatus.UNAUTHORIZED;
+            message = "Unauthorized: " + ex.getMessage();
+        } else {
+            log.error("Unhandled exception: {}", ex.getMessage(), ex);
+        }
 
         ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
                 .timestamp(System.currentTimeMillis())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-                .message("Error interno del servidor")
-                .path(path)
+                .status(status.value())
+                .error(status.getReasonPhrase())
+                .message(message)
+                .path(request.getRequestURI())
                 .build();
 
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(errorResponse);
     }
 
 
-     //Método auxiliar para extraer el path del request
+     //Auxiliary method to extract the request path
 
     private String extractPath(WebRequest request) {
         if (request instanceof ServletWebRequest servletRequest) {

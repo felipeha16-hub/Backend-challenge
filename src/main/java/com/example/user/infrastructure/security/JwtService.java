@@ -52,4 +52,14 @@ public class JwtService implements TokenService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+    @Override
+    public String extractEmail(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
 }

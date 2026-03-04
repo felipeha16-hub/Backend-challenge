@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/users")
 @Tag(name = "Users", description = "Gestión de usuarios y pokémones asociados")
 public class UserController {
 
@@ -36,7 +36,7 @@ public class UserController {
 
     @PostMapping({"/register"})
     @Operation(
-            summary = "Register nuew user",
+            summary = "Register new user",
             description = "Register new user with email, passsword"
     )
     @ApiResponses({
@@ -47,7 +47,7 @@ public class UserController {
                     content = @Content(
                             mediaType = "application/json",
                             examples = @ExampleObject(
-                                    name = "usuario_duplicado",
+                                    name = "user_duplicated",
                                     value = "{\"timestamp\":1771947757845,\"status\":400,\"error\":\"Bad Request\",\"message\":\"User already exist.\",\"path\":\"/api/register\"}"
                             )
                     )

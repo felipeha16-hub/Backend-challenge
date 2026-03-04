@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Notification {
 
+    private Long id;
     private String title;
     private String content;
     private String channel; // e.g., "email", "sms", "push"
+    private User user;
 
 }

@@ -4,7 +4,7 @@ import com.example.user.domain.model.User;
 import com.example.user.domain.repository.UserRepository;
 import com.example.user.infrastructure.persistence.JpaUserRepository;
 import com.example.user.infrastructure.persistence.entity.UserEntity;
-import com.example.user.infrastructure.persistence.mapper.IUserMapper;
+import com.example.user.infrastructure.persistence.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -13,9 +13,9 @@ import java.util.Optional;
 public class UserRepositoryAdapter implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;
-    private final IUserMapper userMapper;
+    private final UserMapper userMapper;
 
-    public UserRepositoryAdapter(JpaUserRepository jpaUserRepository, IUserMapper userMapper) {
+    public UserRepositoryAdapter(JpaUserRepository jpaUserRepository, UserMapper userMapper) {
         this.jpaUserRepository = jpaUserRepository;
         this.userMapper = userMapper;
     }

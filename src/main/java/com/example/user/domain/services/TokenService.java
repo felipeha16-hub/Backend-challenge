@@ -9,6 +9,6 @@ public interface TokenService {
     boolean isTokenValid(String token);
 
     Key getSignInKey();
-    // String extractEmail(String token);
+    String extractEmail(String token);
 
 }
