@@ -20,6 +20,7 @@ public enum BusinessErrorMessage {
 
     // 404 - Not Found
     USER_NOT_FOUND("User not found", HttpStatus.NOT_FOUND),
+    NOTIFICATION_NOT_FOUND("Notification not found", HttpStatus.NOT_FOUND),
 
     // 500 - Internal Server Error
     INTERNAL_SERVER_ERROR("Error interno del servidor.", HttpStatus.INTERNAL_SERVER_ERROR);

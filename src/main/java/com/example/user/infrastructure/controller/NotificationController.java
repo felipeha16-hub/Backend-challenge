@@ -3,7 +3,10 @@ package com.example.user.infrastructure.controller;
 
 import com.example.user.application.dto.CreateNotificationDTO;
 import com.example.user.application.dto.NotificationResponseDTO;
+import com.example.user.application.dto.UpdateNotificationDTO;
+import com.example.user.application.mapper.NotificationMapper;
 import com.example.user.application.useCases.CreateNotificationUseCase;
+import com.example.user.application.useCases.UpdateNotificationUseCase;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +21,9 @@ import org.springframework.web.bind.annotation.*;
 public class NotificationController {
 
     private final CreateNotificationUseCase createNotificationUseCase;
+    private final UpdateNotificationUseCase UpdateNotificationUseCase;
 
-    @PostMapping
+    @PostMapping("/{create}")
     public ResponseEntity<NotificationResponseDTO> createNotification(@Valid @RequestBody CreateNotificationDTO dto) {
 
         //getName returns the email of the authenticated user
@@ -27,6 +31,17 @@ public class NotificationController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createNotificationUseCase.create(dto, email));
+
+    }
+
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<NotificationResponseDTO> updateNotification(@PathVariable Long id,@RequestBody UpdateNotificationDTO dto) {
+
+        NotificationResponseDTO updateNotification = UpdateNotificationUseCase.update(id, dto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(updateNotification);
 
     }
 

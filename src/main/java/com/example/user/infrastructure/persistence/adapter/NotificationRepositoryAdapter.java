@@ -34,5 +34,10 @@ public class NotificationRepositoryAdapter implements NotificationRepository {
         return notificationMapper.toDomain(saved);
 
     }
+
+    @Override
+    public Optional<Notification> findById(Long id) {
+        return japaNotificationRepository.findById(id).map(notificationMapper::toDomain);
+    }
 }
 
