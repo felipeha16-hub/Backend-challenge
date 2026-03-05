@@ -18,4 +18,6 @@ public interface NotificationRepository {
     void deleteById(Long notificationId);
 
     List<Notification> findAllById(Long id);
+
+
 }

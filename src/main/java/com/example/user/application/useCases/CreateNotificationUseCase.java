@@ -22,7 +22,8 @@ public class CreateNotificationUseCase {
 
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final SendNotificationUseCase sendNotification;
+
 
     public NotificationResponseDTO create(CreateNotificationDTO dto,String email) {
 
@@ -34,6 +35,14 @@ public class CreateNotificationUseCase {
         notification.setUser(user);
         // 5. Save to repository
         Notification savedNotification = notificationRepository.save(notification);
+
+        //send notification to channels (Email, SMS and Push Notification)
+
+        sendNotification.sendNotification(savedNotification);
+
+
+
+
 
         return NotificationMapper.toDto(savedNotification);
 

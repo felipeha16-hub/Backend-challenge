@@ -6,13 +6,12 @@ import com.example.user.domain.model.Notification;
 import com.example.user.domain.repository.NotificationRepository;
 
 import com.example.user.infrastructure.persistence.JpaNotificationRepository;
-import com.example.user.infrastructure.persistence.JpaUserRepository;
 import com.example.user.infrastructure.persistence.entity.NotificationEntity;
 
 import com.example.user.infrastructure.persistence.mapper.NotificationMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +50,7 @@ public class NotificationRepositoryAdapter implements NotificationRepository {
     public List<Notification> findAllById(Long id) {
         return japaNotificationRepository.findByUserId(id).stream().map(notificationMapper::toDomain).toList();
     }
+
 
 
 }

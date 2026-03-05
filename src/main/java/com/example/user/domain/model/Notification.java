@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 public class Notification {
 
     private Long id;
+    private User user;
     private String title;
     private String content;
-    private String channel; // e.g., "email", "sms", "push"
-    private User user;
+    private String channel;
+    private String status; // e.g., "sent", "pending", "failed"
 
 }
