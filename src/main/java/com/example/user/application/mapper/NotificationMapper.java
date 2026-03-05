@@ -16,6 +16,7 @@ public class NotificationMapper {
     public static NotificationResponseDTO toDto(Notification notification) {
 
         return  new NotificationResponseDTO(
+                notification.getId(),
                 notification.getTitle(),
                 notification.getContent(),
                 notification.getChannel()

@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationResponseDTO {
+
+    private Long id;
+
+
     @NotBlank
     @Schema(name = "title", description = "Title of the notification")
     private String title;

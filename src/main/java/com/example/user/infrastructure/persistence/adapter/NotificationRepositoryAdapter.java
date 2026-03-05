@@ -12,6 +12,8 @@ import com.example.user.infrastructure.persistence.entity.NotificationEntity;
 import com.example.user.infrastructure.persistence.mapper.NotificationMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -39,5 +41,17 @@ public class NotificationRepositoryAdapter implements NotificationRepository {
     public Optional<Notification> findById(Long id) {
         return japaNotificationRepository.findById(id).map(notificationMapper::toDomain);
     }
+
+    @Override
+    public void deleteById(Long notificationId) { japaNotificationRepository.deleteById(notificationId); }
+
+
+
+    @Override
+    public List<Notification> findAllById(Long id) {
+        return japaNotificationRepository.findByUserId(id).stream().map(notificationMapper::toDomain).toList();
+    }
+
+
 }
 

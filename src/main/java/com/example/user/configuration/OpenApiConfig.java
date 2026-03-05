@@ -18,13 +18,22 @@ public class OpenApiConfig {
 
 
     @Bean
-    public io.swagger.v3.oas.models.OpenAPI springShopOpenAPI() {
-        return new io.swagger.v3.oas.models.OpenAPI()
-                .info(new Info().title("Backen challenge")
-                        .description("Example API to user management and notifications")
-                        .version("v0.0.1"))
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+
+                .info(new Info()
+                        .title("Backend Challenge")
+                        .description("API for user management and notifications")
+                        .version("v1.0.0"))
+                // Bearer token
+                .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
+                .components(new Components()
+                        .addSecuritySchemes("BearerAuth", new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT")))
                 .externalDocs(new ExternalDocumentation()
-                        .description("Backen challenge")
+                        .description("Backend Documentation")
                         .url("https://example.com"));
     }
 
@@ -32,20 +41,11 @@ public class OpenApiConfig {
     @Bean
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
-                .group("")
+                .group("Backend challenge")
                 .packagesToScan("com.example.user.infrastructure.controller")
                 .pathsToMatch("/api/**")
                 .build();
     }
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
-                .components(new Components()
-                        .addSecuritySchemes("BearerAuth", new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer")
-                                .bearerFormat("JWT")));
-    }
+
 }
