@@ -28,10 +28,10 @@ public class LoginUserUseCase {
         //Validate email and password
 
         User user = repository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new BusinessException(BusinessErrorMessage.USER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(BusinessErrorMessage.INCORRECT_CREDENTIALS));
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new BusinessException(BusinessErrorMessage.INCORRECT_PASSWORD);
+            throw new BusinessException(BusinessErrorMessage.INCORRECT_CREDENTIALS);
         }
 
         // Generate token

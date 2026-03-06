@@ -26,7 +26,8 @@ public class SmsNotificationAdapter implements NotificationSenderService {
         String content = notification.getContent();
         if (content != null && content.length() > 160) {
             log.warn("SMS content exceeds 160 characters , so it will be limited to this number");
-            content = content.substring(0, 157) ; //We reduced it to 160 characters
+            content = content.substring(0, 160) ; //We reduced it to 160 characters
+            notification.setContent(content);
         }
 
         log.info("SMS sending record: Number: {}, Date: {}, Content: {}",
