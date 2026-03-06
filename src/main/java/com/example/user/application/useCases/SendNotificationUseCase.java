@@ -15,14 +15,17 @@ public class SendNotificationUseCase {
 
     private final List<NotificationSenderService> senders;
 
+
+    public boolean isChannelSupported(String channel) {
+        return senders.stream()
+                .anyMatch(adapter -> adapter.supports(channel));
+    }
+
     public void sendNotification(Notification notification) {
         senders.stream()
-                .filter(s -> s.supports(notification.getChannel()))
+                .filter(adapter -> adapter.supports(notification.getChannel()))
                 .findFirst()
-                .ifPresentOrElse(
-                        s -> s.sendNotification(notification),
-                        () -> { throw new BusinessException(BusinessErrorMessage.INVALID_NOTIFICATION_CHANNEL); }
-                );
+                .ifPresent(adapter -> adapter.sendNotification(notification));
     }
 }
 

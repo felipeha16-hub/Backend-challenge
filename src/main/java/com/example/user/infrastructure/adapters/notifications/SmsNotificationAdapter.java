@@ -29,7 +29,9 @@ public class SmsNotificationAdapter implements NotificationSenderService {
             content = content.substring(0, 157) ; //We reduced it to 160 characters
         }
 
-        log.info("SMS sending record: number: {}, Date: {}, Final Content: {}" + notification.getId(), java.time.LocalDateTime.now(),
+        log.info("SMS sending record: Number: {}, Date: {}, Content: {}",
+                notification.getId(),
+                java.time.LocalDateTime.now(),
                 content);
 
         // to keep the record of the notification in the database we will update the status to SENT

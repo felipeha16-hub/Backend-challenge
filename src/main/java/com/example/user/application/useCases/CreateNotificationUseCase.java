@@ -32,13 +32,23 @@ public class CreateNotificationUseCase {
 
         // Get user by email
         User user = userRepository.findByEmail(email).get();
+
+
         notification.setUser(user);
+
+        //validate that the channel is supported
+
+        if (!sendNotification.isChannelSupported(notification.getChannel())) {
+            throw new BusinessException(BusinessErrorMessage.INVALID_NOTIFICATION_CHANNEL);
+        }
         // 5. Save to repository
+        notification.setStatus("PENDING");
+
         Notification savedNotification = notificationRepository.save(notification);
 
         //send notification to channels (Email, SMS and Push Notification)
-
         sendNotification.sendNotification(savedNotification);
+
 
 
 

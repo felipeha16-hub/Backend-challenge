@@ -25,7 +25,7 @@ public class NotificationMapper {
 
 
     public static Notification toDomain(CreateNotificationDTO dto) {
-        return new Notification(null,dto.getTitle(), dto.getContent(),dto.getChannel(),null);
+        return new Notification(null,dto.getTitle(), dto.getContent(),dto.getChannel(),null,null);
     }
 
     public static Notification toDomain(UpdateNotificationDTO dto, Notification existing) {

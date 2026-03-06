@@ -24,6 +24,7 @@ public class NotificationEntity {
     private String title;
     private String content;
     private String channel;
+    private String status;
 
 }
 
