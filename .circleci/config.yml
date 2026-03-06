@@ -24,6 +24,9 @@ jobs:
       - gradle/with_cache:
           steps:
             - run:
+                  name: Fix permissions
+                  command: chmod +x gradlew
+            - run:
                 name: Build and Test
                 # Generate XML Report
                 command: ./gradlew build jacocoTestReport
