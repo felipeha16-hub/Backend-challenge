@@ -14,4 +14,10 @@ public class RootController {
     public void redirectToSwagger(HttpServletResponse response) throws IOException {
         response.sendRedirect("/swagger-ui.html");
     }
+
+
+    @GetMapping("/api/v1/public/health")
+    public String healthCheck() {
+        return "Service is running";
+    }
 }
