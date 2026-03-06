@@ -14,9 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.test.context.ActiveProfiles;
-
 import java.util.List;
 
 
@@ -328,6 +326,9 @@ class UserE2EIT {
         assertThat(responseDelete.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
     }
+
+
+
 
     
 
