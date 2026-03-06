@@ -37,6 +37,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
                                 "/webjars/**").permitAll()
+                        // Allow access to heroku URL where APP was deployed
+                        .requestMatchers("https://takehomechallenge-d883931b8e0b.herokuapp.com").permitAll()
                         .anyRequest().authenticated()
                 )
 
