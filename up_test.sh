@@ -1,4 +1,4 @@
-docker-compose -f docker-compose.yml up --build --abort-on-container-exit
+docker-compose -p up_test -f docker-compose.test.yml up --build --abort-on-container-exit
 EXIT_CODE=$?
 
 
@@ -17,7 +17,7 @@ echo "Press any key to exit ..."
 read -n 1
 
 # down containers
-docker-compose -p up_test -f docker-compose.yml down
+docker-compose -p up_test -f docker-compose.test.yml down
 
 echo "Containers Stop."
 

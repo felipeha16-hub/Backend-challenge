@@ -1,0 +1,41 @@
+version: 2.1
+orbs:
+  gradle: circleci/gradle@3.0.0
+  coveralls: coveralls/coveralls@2.2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/openjdk:21.0
+        environment:
+          TEST_DATABASE_URL: postgresql://postgres@localhost/challenge_db_test
+          DB_TEST_USERNAME: root
+          DB_TEST_PASSWORD: root
+          SPRING_PROFILES_ACTIVE: test
+
+      #Database
+      - image: cimg/postgres:15.0
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: challenge_db_test
+    steps:
+      - checkout
+      - gradle/with_cache:
+          steps:
+            - run:
+                  name: Fix permissions
+                  command: chmod +x gradlew
+            - run:
+                name: Build and Test
+                # Generate XML Report
+                command: ./gradlew build jacocoTestReport
+            - coveralls/upload:
+                # path XML of JaCoCo
+                coverage_file: build/reports/jacoco/test/jacocoTestReport.xml
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-and-test

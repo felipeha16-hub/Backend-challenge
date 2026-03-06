@@ -7,17 +7,23 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "notifications")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class NotificationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+
+    private String title;
+    private String content;
+    private String channel;
     private String status;
 
 }

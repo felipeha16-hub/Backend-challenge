@@ -23,20 +23,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/users")
 @Tag(name = "Users", description = "Gestión de usuarios y pokémones asociados")
 public class UserController {
 
     private final CreateUserUseCase createUserUseCase;
     private final LoginUserUseCase loginUserUseCase;
-    //private final PatchUserUseCase patchUserUseCase;
-    //private final DeleteUserUseCase deleteUserUseCase;
+
 
 
 
     @PostMapping({"/register"})
     @Operation(
-            summary = "Register nuew user",
+            summary = "Register new user",
             description = "Register new user with email, passsword"
     )
     @ApiResponses({
@@ -47,7 +46,7 @@ public class UserController {
                     content = @Content(
                             mediaType = "application/json",
                             examples = @ExampleObject(
-                                    name = "usuario_duplicado",
+                                    name = "user_duplicated",
                                     value = "{\"timestamp\":1771947757845,\"status\":400,\"error\":\"Bad Request\",\"message\":\"User already exist.\",\"path\":\"/api/register\"}"
                             )
                     )
@@ -81,85 +80,6 @@ public class UserController {
 
 
 
-/**
-    @PatchMapping("/{id}")
-    @Operation(
-            summary = "Actualizar usuario",
-            description = "Actualiza parcialmente los datos de un usuario (email, username, contraseña, IDs de pokémones)"
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuario actualizado exitosamente"),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Datos inválidos o email ya existe en otro usuario",
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "usuario_duplicado",
-                                    value = "{\"timestamp\":1771947757845,\"status\":400,\"error\":\"Bad Request\",\"message\":\"El usuario ya existe.\",\"path\":\"/api/users/1\"}"
-                            )
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Usuario no encontrado",
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "usuario_no_encontrado",
-                                    value = "{\"timestamp\":1771947757845,\"status\":404,\"error\":\"Not Found\",\"message\":\"Usuario no encontrado.\",\"path\":\"/api/users/999\"}"
-                            )
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Error interno del servidor",
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "error_500",
-                                    value = "{\"timestamp\":1771947757845,\"status\":500,\"error\":\"Internal Server Error\",\"message\":\"Error interno del servidor.\",\"path\":\"/api/users/1\"}"
-                            )
-                    )
-            )
-    })
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO dto) {
-        UserResponseDTO updatedUser = patchUserUseCase.update(id, dto);
-        return ResponseEntity.ok(updatedUser);
-    }
 
-    @DeleteMapping("/{id}")
-    @Operation(
-            summary = "Eliminar usuario",
-            description = "Elimina un usuario y todos sus datos asociados de forma permanente"
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Usuario eliminado exitosamente (sin contenido)"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Usuario no encontrado",
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "usuario_no_encontrado",
-                                    value = "{\"timestamp\":1771947757845,\"status\":404,\"error\":\"Not Found\",\"message\":\"Usuario no encontrado.\",\"path\":\"/api/users/999\"}"
-                            )
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Error interno del servidor",
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "error_500",
-                                    value = "{\"timestamp\":1771947757845,\"status\":500,\"error\":\"Internal Server Error\",\"message\":\"Error interno del servidor.\",\"path\":\"/api/users/1\"}"
-                            )
-                    )
-            )
-    })
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        deleteUserUseCase.delete(id);
-        return ResponseEntity.noContent().build();
-    }**/
+
 }
