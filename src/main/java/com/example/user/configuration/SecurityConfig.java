@@ -31,14 +31,15 @@ public class SecurityConfig {
        return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/users/login", "/api/v1/users/register","/api/v1/users/login",
+                        .requestMatchers("/api/v1/users/login",
                                 "/api/v1/users/register",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
-                                "/webjars/**").permitAll()
-                        // Allow access to heroku URL where APP was deployed
-                        .requestMatchers("https://takehomechallenge-d883931b8e0b.herokuapp.com").permitAll()
+                                "/webjars/**",
+                                "/api/v1/public/**"// Allow access to heroku URL where APP was deployed
+                        ).permitAll()
+
                         .anyRequest().authenticated()
                 )
 
