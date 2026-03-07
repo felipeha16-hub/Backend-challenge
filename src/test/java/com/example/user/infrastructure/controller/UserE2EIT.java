@@ -297,6 +297,34 @@ class UserE2EIT {
         assertThat(responseNotificationEmptyContent.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
+    @Test
+    @DisplayName("E2E return 400 when try to update a notification with invalid Channel ")
+    void shouldReturn400WhenUpdateNotificationWithInvalidChannel() {
+        //Get Token
+        String token = getToken("juan@example", "pasword123");
+        assertThat(token).isNotNull();
+
+        // Set the Authorization header with the token
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+
+        // Create notification to update
+        CreateNotificationDTO dtoEmail = new CreateNotificationDTO("Test", "Content", "Email");
+        HttpEntity<CreateNotificationDTO> request = new HttpEntity<>(dtoEmail, headers);
+        ResponseEntity<NotificationResponseDTO> responseNotification = restTemplate.postForEntity("/api/v1/notifications/create", request, NotificationResponseDTO.class);
+        assertThat(responseNotification.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        Long notificationId = responseNotification.getBody().getId();
+
+        // Update notification with invalid channel
+        UpdateNotificationDTO invalidChannel = new UpdateNotificationDTO("Title", "Content", "Invalid Channel");
+        HttpEntity<UpdateNotificationDTO> requestInvalidChannel = new HttpEntity<>(invalidChannel, headers);
+        ResponseEntity<String> responseUpdateInvalidChannel = restTemplate.exchange(
+                "/api/v1/notifications/update/" + notificationId, org.springframework.http.HttpMethod.PATCH, requestInvalidChannel, String.class);
+        assertThat(responseUpdateInvalidChannel.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(responseUpdateInvalidChannel.getBody()).contains("Invalid notification channel, valid channels : Email, SMS, Push Notification ");
+
+
+    }
     
 
     @Test

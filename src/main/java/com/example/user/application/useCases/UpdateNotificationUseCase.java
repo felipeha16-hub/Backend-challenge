@@ -23,6 +23,7 @@ public class UpdateNotificationUseCase {
 
     private final NotificationRepository notificationRepository;
     private final UserRepository repository;
+    private final SendNotificationUseCase sendNotification;
 
     public NotificationResponseDTO update(Long id, UpdateNotificationDTO dto) {
 
@@ -40,6 +41,10 @@ public class UpdateNotificationUseCase {
         // Check if the notification belongs to the user
         if (!existingNotification.getUser().getEmail().equals(emailFromToken)) {
             throw new BusinessException(BusinessErrorMessage.NOTIFICATION_NOT_FOUND);
+        }
+        // Validate that the channel is supported if it's being updated
+        if ( dto.getChannel() == null ||!sendNotification.isChannelSupported(dto.getChannel())) {
+            throw new BusinessException(BusinessErrorMessage.INVALID_NOTIFICATION_CHANNEL);
         }
 
 
