@@ -16,8 +16,4 @@ public class RootController {
     }
 
 
-    @GetMapping("/api/v1/public/health")
-    public String healthCheck() {
-        return "Service is running";
-    }
 }
