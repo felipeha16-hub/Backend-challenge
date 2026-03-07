@@ -68,6 +68,22 @@ class UserE2EIT {
 
     }
 
+    @Test
+    @DisplayName("E2E POST /users/register - Returns 409 when try to register with an email that already exist")
+    void shouldReturn409WhenRegisterWithEmailThatAlreadyExist() {
+
+        // POST: create User
+        CreateUserDTO createRequest = new CreateUserDTO( "juan@example.com", "password123");
+        ResponseEntity<Void> createResponse = restTemplate.postForEntity("/api/v1/users/register", createRequest, Void.class);
+        //201
+        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+        //POST: create User with the same email
+        CreateUserDTO createRequestDuplicate = new CreateUserDTO( "juan@example.com", "password123");
+        ResponseEntity<String> createResponseDuplicate = restTemplate.postForEntity("/api/v1/users/register", createRequestDuplicate, String.class);
+        //409
+        assertThat(createResponseDuplicate.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+    }
 
     @Test
     @DisplayName("E2E POST /users/login - Returns 401 with wrong password or email")
